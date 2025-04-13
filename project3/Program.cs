@@ -92,11 +92,11 @@ class Program
             return;
         }
 
-        bookings[index].PassengerName = string.Empty;
-        bookings[index].FlightNumber = string.Empty;
+        bookings[index].PassengerName = string.Empty;//to clear the passenger name 
+        bookings[index].FlightNumber = string.Empty; //to clear the flight number 
         bookings[index].Date = default;
-        bookings[index].IsConfirmed = false;
-        bookings[index].BookingID = null;
+        bookings[index].IsConfirmed = false;//bool
+        bookings[index].BookingID = null;//meaning no booking id exists anymore 
 
         p("Booking has been successfully canceled.");
     }
