@@ -88,7 +88,7 @@ class Program
         int index = -1;
         for (int i = 0; i < bookingCount; i++)
         {
-            if (bookings[i].BookingID == bookingId)
+            if (bookings[i].BookingID == bookingId) //From the ith booking, give me the value of the BookingID field.
             {
                 index = i;
                 break;
