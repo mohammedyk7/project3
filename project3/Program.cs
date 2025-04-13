@@ -88,11 +88,11 @@ class Program
         Console.Write("Enter Booking ID: "); //i ask for the booking id here 
         string? bookingId = Console.ReadLine();
 
-        // Extract Booking IDs into a separate array for searching
+        // creating booking ID s array to check if the booking ID exists
         string[] bookingIDs = new string[bookingCount];
         for (int i = 0; i < bookingCount; i++)
         {
-            bookingIDs[i] = bookings[i].BookingID ?? string.Empty; // Use null-coalescing operator to handle null values
+            bookingIDs[i] = bookings[i].BookingID ?? string.Empty; // Use null-coalescing operator to handle null values + we got no values assigned yet 
         }
 
         // Use Array.IndexOf to find the booking
