@@ -83,12 +83,12 @@ class Program
             //booking[i] != null to make sure is not cancelled &
             //bookings[i].BookingID == bookingId	See if the current booking has the same ID the user typed
             {
-                index = i;
+                index = i;//when i =1 // index = 1
                 break;
             }
         }
 
-        if (index == -1)
+        if (index == -1) //meaning if i = -1 ...
         {
             p("Booking not found.");
             return;
