@@ -82,7 +82,7 @@ class Program
         passengerName = string.Empty; // I WILL NOT USE "TRY PARSE" BECAUSE IM NOT EXPECTING A NUMBER to make sure the user didn’t type "abc" by mistake.
 
         Console.Write("Enter Booking ID: ");
-        string bookingId = Console.ReadLine();
+        string? bookingId = Console.ReadLine();
 
         // Search for the booking
         int index = -1;
@@ -97,7 +97,7 @@ class Program
 
         if (index == -1)
         {
-            Console.WriteLine("Booking not found.");
+            Console.WriteLine("Booking not found."); //SEARCHING FOR THE BOOKING ID
             return;
         }
 
