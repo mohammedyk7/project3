@@ -66,7 +66,7 @@ class Program
         //    var flight = flights[i]; //i used var so it can be integer or string
         //    p($"{flight.FlightCode}: {flight.FromCity} to {flight.ToCity} at {flight.Departure}, Duration: {flight.Duration} mins");
         //}
-    {
+    
         for (int i = 0; i < flightCount; i++) //shorter one ..
         {
             var flight = flights[i]; //i used var so it can be integer or string
@@ -74,7 +74,7 @@ class Program
         }
     }
 
-    static bool FindFlightByCode(string code)
+    static bool FindFlightByCode(string code) //return true or falso "bool"
     {
         for (int i = 0; i < flightCount; i++)
         {
