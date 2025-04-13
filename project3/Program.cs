@@ -27,7 +27,7 @@ class Program
         Console.WriteLine("3. View All Flights");
         Console.WriteLine("4. Exit");
         Console.Write("Enter your choice: ");
-        int choice = int.Parse(Console.ReadLine());
+        int choice = int.Parse(Console.ReadLine()); //not sure if i ahould awitch it to string 
         return choice;
     }
 
@@ -69,7 +69,7 @@ class Program
     static void CancelFlightBooking(out string passengerName)
     {
         Console.Write("Enter booking ID: ");
-        string id = Console.ReadLine();
+        string? id = Console.ReadLine();//i added ? to remove the error 
         for (int i = 0; i < bookingCount; i++)
         {
             if (bookings[i].BookingID == id)
