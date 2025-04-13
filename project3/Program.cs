@@ -108,9 +108,9 @@ class Program
         passengerName = bookings[index].PassengerName ?? "unknown "; // Handle potential null value
 
         // Shift the array to remove the booking
-        for (int i = index; i < bookingCount - 1; i++)
+        for (int i = index; i < bookingCount - 1; i++) //The - 1 ensures that we don’t go out of bounds of the array
         {
-            bookings[i] = bookings[i + 1]; // Shift bookings to remove the canceled one
+            bookings[i] = bookings[i + 1]; // Shift bookings to remove the canceled one ,  shifts each booking at position i + 1 into position i
         }
 
         bookingCount--; // Decrease the booking count
