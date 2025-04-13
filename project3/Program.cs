@@ -50,13 +50,26 @@ class Program
     static void AddFlight(string flightCode, string fromCity, string toCity, DateTime departureTime, int duration) // no return 
     {
         flights[flightCount++] = new Flight { FlightCode = flightCode, FromCity = fromCity, ToCity = toCity, Departure = departureTime, Duration = duration };
+        //flights[flightCount++]  flight[increment]
     }
 
-    static void DisplayAllFlights()
+    static void DisplayAllFlights() //longer solution ..
     {
-        for (int i = 0; i < flightCount; i++)
+        //p("Available Flights:");
+        //if (flightCount == 0)
+        //{
+        //    p("No flights available.");
+        //    return;
+        //}
+        //for (int i = 0; i < flightCount; i++)
+        //{
+        //    var flight = flights[i]; //i used var so it can be integer or string
+        //    p($"{flight.FlightCode}: {flight.FromCity} to {flight.ToCity} at {flight.Departure}, Duration: {flight.Duration} mins");
+        //}
+    {
+        for (int i = 0; i < flightCount; i++) //shorter one ..
         {
-            var flight = flights[i];
+            var flight = flights[i]; //i used var so it can be integer or string
             p($"{flight.FlightCode}: {flight.FromCity} to {flight.ToCity} at {flight.Departure}, Duration: {flight.Duration} mins");
         }
     }
