@@ -19,6 +19,12 @@ class Program
         Console.WriteLine("===========================");
     }
 
+    //// Print method to replace Console.WriteLine
+    //static void p(string message)
+    //{
+    //    Console.WriteLine(message);
+    //}
+
     static int ShowMainMenu()
     {
         Console.WriteLine("\nMain Menu:");
