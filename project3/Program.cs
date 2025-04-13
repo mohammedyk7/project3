@@ -77,30 +77,30 @@ class Program
         departure = DateTime.Parse(Console.ReadLine());
     }
 
-    static void CancelFlightBooking(out string passengerName) // IDs are usually alphanumeric so no try parse needed 
+    static void CancelFlightBooking(out string passengerName)
     {
-        passengerName = string.Empty; // I WILL NOT USE "TRY PARSE" BECAUSE IM NOT EXPECTING A NUMBER to make sure the user didn’t type "abc" by mistake.
+        passengerName = string.Empty; // Ensure out parameter is always assigned
 
         Console.Write("Enter Booking ID: ");
         string? bookingId = Console.ReadLine();
 
-        // Search for the booking
-        int index = -1;
+        // Extract Booking IDs into a separate array for searching
+        string[] bookingIDs = new string[bookingCount];
         for (int i = 0; i < bookingCount; i++)
         {
-            if (bookings[i].BookingID == bookingId) //From the ith booking, give me the value of the BookingID field.
-            {
-                index = i;
-                break;
-            }
+            bookingIDs[i] = bookings[i].BookingID;
         }
+
+        // Use Array.IndexOf to find the booking
+        int index = Array.IndexOf(bookingIDs, bookingId, 0, bookingCount);
 
         if (index == -1)
         {
-            Console.WriteLine("Booking not found."); //SEARCHING FOR THE BOOKING ID
+            Console.WriteLine("Booking not found.");
             return;
         }
 
+        // Get the passenger name before removing
         passengerName = bookings[index].PassengerName;
 
         // Shift the array to remove the booking
@@ -108,10 +108,12 @@ class Program
         {
             bookings[i] = bookings[i + 1];
         }
+
         bookingCount--;
 
         Console.WriteLine($"Booking canceled. Passenger: {passengerName}");
     }
+
 
     static void BookFlight(string passengerName, string flightCode = "Default001")
     {
