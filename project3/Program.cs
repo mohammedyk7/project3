@@ -106,7 +106,7 @@ class Program
         // Shift the array to remove the booking
         for (int i = index; i < bookingCount - 1; i++)
         {
-            bookings[i] = bookings[i + 1];
+            bookings[i] = bookings[i + 1]; //because we want to remove the booking
         }
 
         bookingCount--;
