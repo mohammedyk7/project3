@@ -113,7 +113,7 @@ class Program
             bookings[i] = bookings[i + 1]; // Shift bookings to remove the canceled one ,  shifts each booking at position i + 1 into position i
         }
 
-        bookingCount--; // Decrease the booking count
+        bookingCount--; // Decrease the booking count , After the shift, we decrease bookingCount by 1 to reflect that one booking has been canceled and removed from the list
 
         Console.WriteLine($"Booking canceled. Passenger: {passengerName}"); // Passenger name is passed to the method
     }
