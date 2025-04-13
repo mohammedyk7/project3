@@ -81,7 +81,7 @@ class Program
     static void CancelFlightBooking(out string passengerName)
     //void not returning anything
     //static belongs to the class 
-    //
+    //bookingcount is the total number of bookings 
     {
         passengerName = string.Empty; // i have to initiALIZE THE OUT PARAMETER first 
 
