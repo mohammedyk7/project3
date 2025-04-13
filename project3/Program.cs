@@ -78,7 +78,8 @@ class Program
     {
         for (int i = 0; i < flightCount; i++)
         {
-            if (flights[i].FlightCode == code)
+            if (flights[i].FlightCode == code) //flights[i].FlightCode == parameter 
+                //The dot operator is used to access the FlightCode property of that particular Flight object at index i.
                 return true;
         }
         return false;
