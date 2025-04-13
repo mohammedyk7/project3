@@ -79,7 +79,7 @@ class Program
         string? bookingId = Console.ReadLine();
 
         // Find the booking by ID
-        int index = -1;
+        int index = -1; //  i didnt add "if (!int.TryParse(Console.ReadLine()," because the entry could be alphanumetric like da32
         for (int i = 0; i < bookingCount; i++)
         {
             if (bookings[i] != null && bookings[i].BookingID == bookingId) //null = "An empty chair, waiting for someone to sit down."
