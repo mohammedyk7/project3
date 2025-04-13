@@ -79,24 +79,38 @@ class Program
 
     static void CancelFlightBooking(out string passengerName)
     {
-        Console.Write("Enter booking ID: ");
-        string? id = Console.ReadLine(); // i added ? to remove the error
+        passengerName = string.Empty; // I WILL NOT USE "TRY PARSE" BECAUSE IM NOT EXPECTING A NUMBER to make sure the user didn’t type "abc" by mistake.
+
+        Console.Write("Enter Booking ID: ");
+        string bookingId = Console.ReadLine();
+
+        // Search for the booking
+        int index = -1;
         for (int i = 0; i < bookingCount; i++)
         {
-            if (bookings[i].BookingID == id)
+            if (bookings[i].BookingID == bookingId)
             {
-                passengerName = bookings[i].PassengerName ?? string.Empty; // i added "??" to remove the error
-                for (int j = i; j < bookingCount - 1; j++)
-                {
-                    bookings[j] = bookings[j + 1];
-                }
-                bookingCount--;
-                Console.WriteLine("Booking canceled successfully.");
-                return;
+                index = i;
+                break;
             }
         }
-        passengerName = string.Empty; // Ensure non-null assignment
-        Console.WriteLine("Booking not found.");
+
+        if (index == -1)
+        {
+            Console.WriteLine("Booking not found.");
+            return;
+        }
+
+        passengerName = bookings[index].PassengerName;
+
+        // Shift the array to remove the booking
+        for (int i = index; i < bookingCount - 1; i++)
+        {
+            bookings[i] = bookings[i + 1];
+        }
+        bookingCount--;
+
+        Console.WriteLine($"Booking canceled. Passenger: {passengerName}");
     }
 
     static void BookFlight(string passengerName, string flightCode = "Default001")
