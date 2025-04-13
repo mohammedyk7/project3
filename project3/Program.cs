@@ -66,7 +66,7 @@ class Program
         return false;
     }
 
-    static void UpdateFlightDeparture(ref DateTime departure)
+    static void UpdateFlightDeparture(ref DateTime departure) //we used ref because we want to change the value of departure in the class 
     {
         Console.Write("Enter new departure time (yyyy-mm-dd hh:mm): ");
         departure = DateTime.Parse(Console.ReadLine());
@@ -178,9 +178,9 @@ class Program
             {
                 case 1:
                     Console.Write("Enter your name: ");
-                    string name = Console.ReadLine();
+                    string? name = Console.ReadLine();
                     Console.Write("Enter flight code (or press Enter for default): ");
-                    string code = Console.ReadLine();
+                    string? code = Console.ReadLine();
                     if (string.IsNullOrEmpty(code))
                         BookFlight(name);
                     else
