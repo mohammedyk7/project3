@@ -77,7 +77,7 @@ class Program
         departure = DateTime.Parse(Console.ReadLine());
     }
 
-    static void CancelFlightBooking(out string passengerName)
+    static void CancelFlightBooking(out string passengerName) // IDs are usually alphanumeric so no try parse needed 
     {
         passengerName = string.Empty; // I WILL NOT USE "TRY PARSE" BECAUSE IM NOT EXPECTING A NUMBER to make sure the user didn’t type "abc" by mistake.
 
