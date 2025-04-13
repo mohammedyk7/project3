@@ -111,7 +111,7 @@ class Program
 
         bookingCount--;
 
-        Console.WriteLine($"Booking canceled. Passenger: {passengerName}");
+        Console.WriteLine($"Booking canceled. Passenger: {passengerName}"); //passenger name is passed to the method
     }
 
 
