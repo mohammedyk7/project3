@@ -80,6 +80,8 @@ class Program
         for (int i = 0; i < bookingCount; i++)
         {
             if (bookings[i] != null && bookings[i].BookingID == bookingId)
+            //booking[i] != null to make sure is not cancelled &
+            //bookings[i].BookingID == bookingId	See if the current booking has the same ID the user typed
             {
                 index = i;
                 break;
@@ -96,7 +98,7 @@ class Program
         bookings[index].FlightNumber = string.Empty; //to clear the flight number 
         bookings[index].Date = default;
         bookings[index].IsConfirmed = false;//bool
-        bookings[index].BookingID = null;//meaning no booking id exists anymore 
+        /*bookings[index].BookingID = null;*///meaning no booking id exists anymore because we are not removing the booking from the array anymore 
 
         p("Booking has been successfully canceled.");
     }
