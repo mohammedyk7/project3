@@ -109,7 +109,7 @@ class Program
             bookings[i] = bookings[i + 1]; //because we want to remove the booking
         }
 
-        bookingCount--;
+        bookingCount--; // Decrease the booking count
 
         Console.WriteLine($"Booking canceled. Passenger: {passengerName}"); //passenger name is passed to the method
     }
