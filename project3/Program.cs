@@ -47,7 +47,7 @@ class Program
         p("Thank you for using FlyHigh Airline!");
     }
 
-    static void AddFlight(string flightCode, string fromCity, string toCity, DateTime departureTime, int duration)
+    static void AddFlight(string flightCode, string fromCity, string toCity, DateTime departureTime, int duration) // no return 
     {
         flights[flightCount++] = new Flight { FlightCode = flightCode, FromCity = fromCity, ToCity = toCity, Departure = departureTime, Duration = duration };
     }
