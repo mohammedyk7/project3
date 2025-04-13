@@ -85,7 +85,7 @@ class Program
     {
         passengerName = string.Empty; // i have to initiALIZE THE OUT PARAMETER first 
 
-        Console.Write("Enter Booking ID: ");
+        Console.Write("Enter Booking ID: "); //i ask for the booking id here 
         string? bookingId = Console.ReadLine();
 
         // Extract Booking IDs into a separate array for searching
