@@ -5,7 +5,7 @@ class Program
     static Flight[] flights = new Flight[100];
     static Booking[] bookings = new Booking[100];
     static int flightCount = 0;//defined flightCount
-    static int bookingCount = 0;//defined
+    static int bookingCount = 0;//defined bookingCount
 
     static void Main(string[] args)
     {
