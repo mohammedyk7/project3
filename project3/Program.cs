@@ -77,9 +77,10 @@ class Program
         departure = DateTime.Parse(Console.ReadLine());
     }
 
+    // Fix for CS8601: Possible null reference assignment.
     static void CancelFlightBooking(out string passengerName)
     {
-        passengerName = string.Empty; // Ensure out parameter is always assigned
+        passengerName = string.Empty; // Ensure out parameter is always assigned so it doesn't cause a null reference exception
 
         Console.Write("Enter Booking ID: ");
         string? bookingId = Console.ReadLine();
@@ -88,7 +89,7 @@ class Program
         string[] bookingIDs = new string[bookingCount];
         for (int i = 0; i < bookingCount; i++)
         {
-            bookingIDs[i] = bookings[i].BookingID;
+            bookingIDs[i] = bookings[i].BookingID ?? string.Empty; // Use null-coalescing operator to handle null values
         }
 
         // Use Array.IndexOf to find the booking
@@ -96,22 +97,22 @@ class Program
 
         if (index == -1)
         {
-            Console.WriteLine("Booking not found."); //booking not found in the array 
+            Console.WriteLine("Booking not found."); // Booking not found in the array
             return;
         }
 
         // Get the passenger name before removing
-        passengerName = bookings[index].PassengerName;
+        passengerName = bookings[index].PassengerName ?? "Unknown"; // Handle potential null value
 
         // Shift the array to remove the booking
         for (int i = index; i < bookingCount - 1; i++)
         {
-            bookings[i] = bookings[i + 1]; //because we want to remove the booking
+            bookings[i] = bookings[i + 1]; // Shift bookings to remove the canceled one
         }
 
         bookingCount--; // Decrease the booking count
 
-        Console.WriteLine($"Booking canceled. Passenger: {passengerName}"); //passenger name is passed to the method
+        Console.WriteLine($"Booking canceled. Passenger: {passengerName}"); // Passenger name is passed to the method
     }
 
 
