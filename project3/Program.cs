@@ -96,7 +96,7 @@ class Program
 
         if (index == -1)
         {
-            Console.WriteLine("Booking not found.");
+            Console.WriteLine("Booking not found."); //booking not found in the array 
             return;
         }
 
