@@ -6,6 +6,11 @@ class Program
     static Booking[] bookings = new Booking[100];
     static int flightCount = 0;//defined flightCount
     static int bookingCount = 0;//defined bookingCount
+      public string? FlightCode;
+        public string? FromCity;
+        public string? ToCity;
+        public DateTime Departure;
+        public int Duration;
 
     static void Main(string[] args)
     {
@@ -75,12 +80,12 @@ class Program
     static void CancelFlightBooking(out string passengerName)
     {
         Console.Write("Enter booking ID: ");
-        string? id = Console.ReadLine();//i added ? to remove the error 
+        string? id = Console.ReadLine(); // i added ? to remove the error
         for (int i = 0; i < bookingCount; i++)
         {
             if (bookings[i].BookingID == id)
             {
-                passengerName = bookings[i].PassengerName;
+                passengerName = bookings[i].PassengerName ?? string.Empty; // i added "??" to remove the error
                 for (int j = i; j < bookingCount - 1; j++)
                 {
                     bookings[j] = bookings[j + 1];
@@ -90,7 +95,7 @@ class Program
                 return;
             }
         }
-        passengerName = string.Empty;
+        passengerName = string.Empty; // Ensure non-null assignment
         Console.WriteLine("Booking not found.");
     }
 
@@ -98,7 +103,7 @@ class Program
     {
         if (ValidateFlightCode(flightCode))
         {
-            string bookingID = GenerateBookingID(passengerName);
+            string?  bookingID = GenerateBookingID(passengerName);
             bookings[bookingCount++] = new Booking { PassengerName = passengerName, FlightCode = flightCode, BookingID = bookingID };
             Console.WriteLine($"Booking confirmed. ID: {bookingID}");
         }
@@ -179,6 +184,11 @@ class Program
                 case 1:
                     Console.Write("Enter your name: ");
                     string? name = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        Console.WriteLine("Name cannot be empty. Please try again.");
+                        break;
+                    }
                     Console.Write("Enter flight code (or press Enter for default): ");
                     string? code = Console.ReadLine();
                     if (string.IsNullOrEmpty(code))
@@ -205,17 +215,17 @@ class Program
 
     class Flight
     {
-        public string FlightCode;
-        public string FromCity;
-        public string ToCity;
+        public string? FlightCode;
+        public string? FromCity;
+        public string? ToCity;
         public DateTime Departure;
         public int Duration;
     }
 
     class Booking
     {
-        public string PassengerName;
-        public string FlightCode;
-        public string BookingID;
+        public string? PassengerName;
+        public string? FlightCode;
+        public string? BookingID;
     }
 }
