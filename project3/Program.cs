@@ -39,7 +39,7 @@ class Program
             return choice;
         }
         p("Invalid input. Please enter a number.");
-        return 0; // Return 0 for invalid input
+        return  -1; // Return -1 for invalid input
     }
 
     static void ExitApplication()
@@ -71,36 +71,47 @@ class Program
         return false;
     }
 
-    static void CancelFlightBooking()
+    static void CancelFlightBooking(out string passengerName)
     {
-        p("Enter Booking ID: ");
+        passengerName = string.Empty; // Ensure out parameter is always assigned
+
+        Console.Write("Enter Booking ID: ");
         string? bookingId = Console.ReadLine();
 
+        // Find the booking by ID
         int index = -1;
         for (int i = 0; i < bookingCount; i++)
         {
-            if (bookings[i] != null && bookings[i].BookingID == bookingId)
-            //booking[i] != null to make sure is not cancelled &
-            //bookings[i].BookingID == bookingId	See if the current booking has the same ID the user typed
+            if (bookings[i] != null && bookings[i].BookingID == bookingId) //null = "An empty chair, waiting for someone to sit down."
+            //bookings[i] != null check added
+            //bookings[i].BookingID == bookingId check added
             {
-                index = i;//when i =1 // index = 1
+                index = i; //when i =1 index =1 
+                break;
+            }
+            {
+                index = i; //when i =1 index =1 
                 break;
             }
         }
 
-        if (index == -1) //meaning if i = -1 ...
+        if (index == -1)
         {
             p("Booking not found.");
             return;
         }
 
-        bookings[index].PassengerName = string.Empty;//to clear the passenger name 
-        bookings[index].FlightNumber = string.Empty; //to clear the flight number 
-        bookings[index].Date = default;
-        bookings[index].IsConfirmed = false;//bool
-        /*bookings[index].BookingID = null;*///meaning no booking id exists anymore because we are not removing the booking from the array anymore 
+        // Retrieve passenger name from the found booking
+        passengerName = bookings[index].PassengerName ?? string.Empty;
 
-        p("Booking has been successfully canceled.");
+        // Cancel the reservation by resetting the booking details
+        bookings[index].PassengerName = string.Empty;
+        bookings[index].FlightCode = string.Empty;
+        bookings[index].Date = default;
+        bookings[index].IsConfirmed = false;
+        bookings[index].BookingID = null;
+
+        p($"Booking canceled. Passenger: {passengerName}");
     }
 
     static void BookFlight(string passengerName, string flightCode = "Default001")
@@ -135,6 +146,8 @@ class Program
         while (true)
         {
             int choice = ShowMainMenu();
+            if (choice == -1) continue; // Skip invalid input
+
             switch (choice)
             {
                 case 1:
@@ -154,7 +167,7 @@ class Program
                     break;
                 case 2:
                     if (ConfirmAction("cancel your booking"))
-                        CancelFlightBooking();
+                        CancelFlightBooking(out _);
                     break;
                 case 3:
                     DisplayAllFlights();
@@ -190,7 +203,6 @@ class Program
         public string? FlightCode;
         public string? BookingID;
         public bool IsConfirmed;
-        public string? FlightNumber;
         public DateTime Date;
     }
 }
