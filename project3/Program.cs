@@ -79,8 +79,11 @@ class Program
 
     // Fix for CS8601: Possible null reference assignment.
     static void CancelFlightBooking(out string passengerName)
+    //void not returning anything
+    //static belongs to the class 
+    //
     {
-        passengerName = string.Empty; // Ensure out parameter is always assigned so it doesn't cause a null reference exception
+        passengerName = string.Empty; // i have to initiALIZE THE OUT PARAMETER first 
 
         Console.Write("Enter Booking ID: ");
         string? bookingId = Console.ReadLine();
@@ -102,7 +105,7 @@ class Program
         }
 
         // Get the passenger name before removing
-        passengerName = bookings[index].PassengerName ?? "Unknown"; // Handle potential null value
+        passengerName = bookings[index].PassengerName ?? "unknown "; // Handle potential null value
 
         // Shift the array to remove the booking
         for (int i = index; i < bookingCount - 1; i++)
