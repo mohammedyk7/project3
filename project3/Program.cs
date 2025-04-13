@@ -83,53 +83,43 @@ class Program
     //static belongs to the class 
     //bookingcount is the total number of bookings 
     {
-        static void CancelFlightBooking(out string passengerName)
+        passengerName = string.Empty; // i have to initiALIZE THE OUT PARAMETER first 
+
+        Console.Write("Enter Booking ID: "); //i ask for the booking id here 
+        string? bookingId = Console.ReadLine();
+
+        // creating booking ID s array to check if the booking ID exists
+        string[] bookingIDs = new string[bookingCount];
+        for (int i = 0; i < bookingCount; i++)
         {
-            passengerName = string.Empty; // Ensure out parameter is always assigned
-
-            // Prompt the user to enter a booking ID
-            Console.Write("Enter Booking ID: ");
-            string? bookingIdInput = Console.ReadLine();
-
-            // Validate that Booking ID is a valid integer (if you are expecting a numeric ID)
-            if (!int.TryParse(bookingIdInput, out int bookingId))
-            {
-                Console.WriteLine("Invalid Booking ID. It must be a number."); // Handle invalid input
-                return; // Exit the method
-            }
-
-            // Extract Booking IDs into a separate array for searching
-            string[] bookingIDs = new string[bookingCount];
-            for (int i = 0; i < bookingCount; i++)
-            {
-                bookingIDs[i] = bookings[i].BookingID ?? string.Empty; // Handle potential null values using ?? operator
-            }
-
-            // Use Array.IndexOf to find the booking ID
-            int index = Array.IndexOf(bookingIDs, bookingIdInput, 0, bookingCount);
-
-            if (index == -1) // If booking not found
-            {
-                Console.WriteLine("Booking not found.");
-                return; // Exit method
-            }
-
-            // Get the passenger name before removing the booking
-            passengerName = bookings[index].PassengerName ?? "Unknown"; // Handle potential null value for passenger name
-
-            // Shift the array to remove the canceled booking
-            for (int i = index; i < bookingCount - 1; i++)
-            {
-                bookings[i] = bookings[i + 1]; // Shift the bookings to remove the canceled one
-            }
-
-            bookingCount--; // Decrease the booking count
-
-            Console.WriteLine($"Booking canceled. Passenger: {passengerName}"); // Confirm cancellation and print passenger name
+            bookingIDs[i] = bookings[i].BookingID ?? string.Empty; // Use null-coalescing operator to handle null values + we got no values assigned yet 
         }
 
+        // Use Array.IndexOf to find the booking
+        int index = Array.IndexOf(bookingIDs, bookingId, 0, bookingCount);
 
-        static void BookFlight(string passengerName, string flightCode = "Default001")
+        if (index == -1)
+        {
+            Console.WriteLine("Booking not found."); // Booking not found in the array
+            return;
+        }
+
+        // Get the passenger name before removing
+        passengerName = bookings[index].PassengerName ?? "unknown "; // Handle potential null value
+
+        // Shift the array to remove the booking
+        for (int i = index; i < bookingCount - 1; i++) //The - 1 ensures that we don’t go out of bounds of the array
+        {
+            bookings[i] = bookings[i + 1]; // Shift bookings to remove the canceled one & The - 1 ensures that we don’t
+        }
+
+        bookingCount--; // Decrease the booking count
+
+        Console.WriteLine($"Booking canceled. Passenger: {passengerName}"); // Passenger name is passed to the method
+    }
+
+
+    static void BookFlight(string passengerName, string flightCode = "Default001")
     {
         if (ValidateFlightCode(flightCode))
         {
