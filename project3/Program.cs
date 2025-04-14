@@ -134,7 +134,7 @@ class Program
         if (ValidateFlightCode(flightCode)) //calling another method !
         {
             string bookingID = GenerateBookingID(passengerName);
-            bookings[bookingCount++] = new Booking { PassengerName = passengerName, FlightCode = flightCode, BookingID = bookingID }; //add passenger to booking list !
+            bookings[bookingCount++] = new Booking { PassengerName = passengerName, FlightCode = flightCode, BookingID = bookingID }; //add passenger to booking list!
             p($"Booking confirmed. ID: {bookingID}");
         }
         else
