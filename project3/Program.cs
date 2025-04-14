@@ -101,7 +101,7 @@ class Program
     // The 'out' keyword is used to return a value from a method through a parameter.
     // It allows the method to modify the value of the parameter and pass it back to the caller.
     // In this case, 'out' is used to return the passenger's name after canceling the booking.
-    static void CancelFlightBooking(out string passengerName)
+    static void CancelFlightBooking(out string passengerName) //out becaue passengername got no value .. the value is defined inside the loop 
     {
         passengerName = string.Empty;
         p("Enter Booking ID: ");
