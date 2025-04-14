@@ -14,9 +14,9 @@ class Program
 
     static void DisplayWelcomeMessage()
     {
-        p("===========================");
-        p("  Welcome To Codeline Airline");
-        p("===========================");
+                                                                   p("[===========================]");
+                                                                   p(" Welcome To Codeline Airline ");
+                                                                   p("[===========================]");
     }
 
     // Print method to replace Console.WriteLine
