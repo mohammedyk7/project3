@@ -233,7 +233,8 @@ class Program
         // Display a welcome message to the user
         DisplayWelcomeMessage();
 
-        // Add a default flight to the system
+        // Adding a default flight to the system with flight code "Default001",
+        // departing from Muscat to Dubai, scheduled 2 hours from now, with a duration of 60 minutes.
         AddFlight("Default001", "Muscat", "Dubai", DateTime.Now.AddHours(2), 60);
 
         // Main loop to keep the system running
