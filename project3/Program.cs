@@ -131,7 +131,7 @@ class Program
 
     static void BookFlight(string passengerName, string flightCode = "Default001") //no return because "void"
     {
-        if (ValidateFlightCode(flightCode))
+        if (ValidateFlightCode(flightCode)) //calling another method !
         {
             string bookingID = GenerateBookingID(passengerName);
             bookings[bookingCount++] = new Booking { PassengerName = passengerName, FlightCode = flightCode, BookingID = bookingID };
