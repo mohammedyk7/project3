@@ -26,21 +26,26 @@ class Program
 
     static int ShowMainMenu()
     {
-        p("\nMain Menu:");
-        p("1. Book Flight");
-        p("2. Cancel Booking");
-        p("3. View All Flights");
-        p("4. Exit");
-        p("Enter your choice: ");
-        string? input = Console.ReadLine();//null if no more available 
-        if (int.TryParse(input, out int choice)) // to convert a string to an integer,checks whether the TryParse method successfully converted the input string into an integer.
-
-            //If successful, the method will return true, 
+        try
         {
-            return choice;
+            p("\nMain Menu:");
+            p("1. Book Flight");
+            p("2. Cancel Booking");
+            p("3. View All Flights");
+            p("4. Exit");
+            p("Enter your choice: ");
+            string? input = Console.ReadLine();
+            if (int.TryParse(input, out int choice))
+            {
+                return choice;
+            }
+            p("Invalid input. Please enter a number.");
         }
-        p("Invalid input. Please enter a number.");
-        return -1; //input os invalid
+        catch (Exception ex)
+        {
+            p($"An error occurred: {ex.Message}");
+        }
+        return -1; // Return -1 for invalid input or errors
     }
 
     static void ExitApplication()
@@ -72,99 +77,106 @@ class Program
         return false;
     }
 
-    static void UpdateFlightDeparture(ref DateTime departure) //REF TO KEEP IT UPDATES 
+    static void UpdateFlightDeparture(ref DateTime departure)
     {
-        p("Enter flight code to update departure: ");
-        string? code = Console.ReadLine();
-        for (int i = 0; i < flightCount; i++)
+        try
         {
-            if (flights[i].FlightCode == code)
+            p("Enter flight code to update departure: ");
+            string? code = Console.ReadLine();
+            for (int i = 0; i < flightCount; i++)
             {
-                Console.Write("Enter new departure time (yyyy-MM-dd HH:mm): ");
-                string? input = Console.ReadLine();
-                if (DateTime.TryParse(input, out DateTime newTime))//because its numiracal 
+                if (flights[i].FlightCode == code)
                 {
-                    departure = newTime;
-                    flights[i].Departure = newTime;
-                    p($"Departure time updated for flight {code} to {newTime}");
+                    p("Enter new departure time (yyyy-MM-dd HH:mm): ");
+                    string? input = Console.ReadLine();
+                    if (DateTime.TryParse(input, out DateTime newTime))
+                    {
+                        departure = newTime;
+                        flights[i].Departure = newTime;
+                        p($"Departure time updated for flight {code} to {newTime}");
+                    }
+                    else
+                    {
+                        p("Invalid date format.");
+                    }
+                    return;
                 }
-                else
-                {
-                    p("Invalid date format.");
-                }
-                return;
             }
+            p("Flight not found.");
         }
-        p("Flight not found.");
+        catch (Exception ex)
+        {
+            p($"An error occurred while updating the flight departure: {ex.Message}");
+        }
     }
     //ref because date time already has a value the change will be updated by the reference
 
 
     // In this case, 'out' is used to return the passenger's name after canceling the booking.
-    static void CancelFlightBooking(out string passengerName) //out becaue passengername got no value .. the value is defined inside the loop 
+    static void CancelFlightBooking(out string passengerName)
     {
-        // Initialize passengerName to an empty string to ensure it has a default value.
         passengerName = string.Empty;
-        p("Enter Booking ID: ");
-        string? bookingId = Console.ReadLine();
-        // Initialize the index variable to -1, which will be used to track the position of the booking in the array.
-        int index = -1;
-        for (int i = 0; i < bookingCount; i++)
+        try
         {
-            // Check if the booking exists and matches the provided booking ID
-            if (bookings[i] != null && bookings[i].BookingID == bookingId)
+            p("Enter Booking ID: ");
+            string? bookingId = Console.ReadLine();
+            int index = -1;
+            for (int i = 0; i < bookingCount; i++)
             {
-                index = i;
-                break;
+                if (bookings[i] != null && bookings[i].BookingID == bookingId)
+                {
+                    index = i;
+                    break;
+                }
             }
+            if (index == -1)
+            {
+                p("Booking not found.");
+                return;
+            }
+            passengerName = bookings[index].PassengerName ?? string.Empty;
+            bookings[index].PassengerName = string.Empty;
+            bookings[index].FlightCode = string.Empty;
+            bookings[index].Date = default;
+            bookings[index].IsConfirmed = false;
+            bookings[index].BookingID = null;
+            p($"Booking canceled. Passenger: {passengerName}");
         }
-        if (index == -1)
+        catch (Exception ex)
         {
-            p("Booking not found.");
-            return;
+            p($"An error occurred while canceling the booking: {ex.Message}");
         }
-        //  assign an empty string if null  
-        passengerName = bookings[index].PassengerName ?? string.Empty;
-        bookings[index].PassengerName = string.Empty;// TO CLEAR THE ARRAY 
-        bookings[index].FlightCode = string.Empty;//TO CLEAR THE ARRAY
-                                                  
-                                                 
-        bookings[index].Date = default;  // Reset the booking date to its default value
-        // Mark the booking as not confirmed
-        bookings[index].IsConfirmed = false;
-        // Clear the booking ID by setting it to null
-        bookings[index].BookingID = null;
-        p($"Booking canceled. Passenger: {passengerName}");
     }
 
     static void BookFlight(string passengerName, string flightCode = "Default001")
     {
-        if (ValidateFlightCode(flightCode))//input validate + no retrun becuase of void
+        try
         {
-            string bookingID = GenerateBookingID(passengerName);
-
-            // Assume a base price for the flight
-            int basePrice = 100; // You can change this value
-            int numTickets = 1;  // Assuming 1 ticket per booking
-
-            // Calculate the fare
-            int totalFare = CalculateFare(basePrice, numTickets);
-
-            // Create the booking
-            bookings[bookingCount++] = new Booking
+            if (ValidateFlightCode(flightCode))
             {
-                PassengerName = passengerName,//this will be the name of the passenger
-                FlightCode = flightCode,//this will be the flight code
-                BookingID = bookingID//this will be the booking ID
-            };
+                string bookingID = GenerateBookingID(passengerName);
+                int basePrice = 100;
+                int numTickets = 1;
+                int totalFare = CalculateFare(basePrice, numTickets);
 
-            // Display the booking confirmation and fare
-            p($"Booking confirmed. ID: {bookingID}");
-            p($"Total fare for {passengerName}: {totalFare} units.");
+                bookings[bookingCount++] = new Booking
+                {
+                    PassengerName = passengerName,
+                    FlightCode = flightCode,
+                    BookingID = bookingID
+                };
+
+                p($"Booking confirmed. ID: {bookingID}");
+                p($"Total fare for {passengerName}: {totalFare} units.");
+            }
+            else
+            {
+                p("Invalid flight code.");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            p("Invalid flight code.");
+            p($"An error occurred while booking the flight: {ex.Message}");
         }
     }
 
