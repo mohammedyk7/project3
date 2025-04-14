@@ -129,7 +129,7 @@ class Program
         p($"Booking canceled. Passenger: {passengerName}");
     }
 
-    static void BookFlight(string passengerName, string flightCode = "Default001")
+    static void BookFlight(string passengerName, string flightCode = "Default001") //no return because "void"
     {
         if (ValidateFlightCode(flightCode))
         {
