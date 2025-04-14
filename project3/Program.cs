@@ -4,8 +4,8 @@ class Program
 {
     static Flight[] flights = new Flight[100];
     static Booking[] bookings = new Booking[100];
-    static int flightCount = 0; //++ or  --
-    static int bookingCount = 0; //++ or  --
+    static int flightCount = 0;
+    static int bookingCount = 0;
 
     static void Main(string[] args)
     {
@@ -14,12 +14,11 @@ class Program
 
     static void DisplayWelcomeMessage()
     {
-                                                                   p("[===========================]");
-                                                                   p(" Welcome To Codeline Airline ");
-                                                                   p("[===========================]");
+        p("[===========================]");
+        p(" Welcome To Codeline Airline ");
+        p("[===========================]");
     }
 
-    // Print method to replace Console.WriteLine
     static void p(string message)
     {
         Console.WriteLine(message);
@@ -39,7 +38,7 @@ class Program
             return choice;
         }
         p("Invalid input. Please enter a number.");
-        return  -1; // Return -1 for invalid input
+        return -1;
     }
 
     static void ExitApplication()
@@ -47,40 +46,25 @@ class Program
         p("Thank you for using FlyHigh Airline!");
     }
 
-    static void AddFlight(string flightCode, string fromCity, string toCity, DateTime departureTime, int duration) // no return 
+    static void AddFlight(string flightCode, string fromCity, string toCity, DateTime departureTime, int duration)
     {
         flights[flightCount++] = new Flight { FlightCode = flightCode, FromCity = fromCity, ToCity = toCity, Departure = departureTime, Duration = duration };
-        //flights[flightCount++]  flight[increment] //[flightCount] keeping track of how many flights have been added.
     }
 
-    static void DisplayAllFlights() //longer solution ..
+    static void DisplayAllFlights()
     {
-        //p("Available Flights:");
-        //if (flightCount == 0)
-        //{
-        //    p("No flights available.");
-        //    return;
-        //}
-        //for (int i = 0; i < flightCount; i++)
-        //{
-        //    var flight = flights[i]; //i used var so it can be integer or string
-        //    p($"{flight.FlightCode}: {flight.FromCity} to {flight.ToCity} at {flight.Departure}, Duration: {flight.Duration} mins");
-        //}
-    
-        for (int i = 0; i < flightCount; i++) //shorter one ..
+        for (int i = 0; i < flightCount; i++)
         {
-            var flight = flights[i]; //I used var so it can be integer or string
+            var flight = flights[i];
             p($"{flight.FlightCode}: {flight.FromCity} to {flight.ToCity} at {flight.Departure}, Duration: {flight.Duration} mins");
         }
     }
 
-    static bool FindFlightByCode(string code) //return true or falso "bool"
-        //string code consists of numbers and letters 
+    static bool FindFlightByCode(string code)
     {
-        for (int i = 0; i < flightCount; i++)//search starts from 0 to flightcount 0 1 2 = flight count = 3
+        for (int i = 0; i < flightCount; i++)
         {
-            if (flights[i].FlightCode == code) // comparison check 
-                //The dot operator is used to access the FlightCode property of that particular Flight object at index i.
+            if (flights[i].FlightCode == code)
                 return true;
         }
         return false;
@@ -88,53 +72,38 @@ class Program
 
     static void CancelFlightBooking(out string passengerName)
     {
-        passengerName = string.Empty; // Ensure out parameter is always assigned
-
+        passengerName = string.Empty;
         Console.Write("Enter Booking ID: ");
         string? bookingId = Console.ReadLine();
-
-        // Find the booking by ID
-        int index = -1; //  i didnt add "if (!int.TryParse(Console.ReadLine()," because the entry could be alphanumetric like da32
+        int index = -1;
         for (int i = 0; i < bookingCount; i++)
         {
-            if (bookings[i] != null && bookings[i].BookingID == bookingId) //null = "An empty chair, waiting for someone to sit down."
-            //bookings[i] != null check added
-            //bookings[i].BookingID == bookingId check added
+            if (bookings[i] != null && bookings[i].BookingID == bookingId)
             {
-                index = i; //when i =1 index =1 
-                break;
-            }
-            {
-                index = i; //when i =1 index =1 
+                index = i;
                 break;
             }
         }
-
         if (index == -1)
         {
             p("Booking not found.");
             return;
         }
-
-        // Retrieve passenger name from the found booking
         passengerName = bookings[index].PassengerName ?? string.Empty;
-
-        // Cancel the reservation by resetting the booking details
         bookings[index].PassengerName = string.Empty;
         bookings[index].FlightCode = string.Empty;
         bookings[index].Date = default;
         bookings[index].IsConfirmed = false;
         bookings[index].BookingID = null;
-
         p($"Booking canceled. Passenger: {passengerName}");
     }
 
-    static void BookFlight(string passengerName, string flightCode = "Default001") //no return because "void"
+    static void BookFlight(string passengerName, string flightCode = "Default001")
     {
-        if (ValidateFlightCode(flightCode)) //calling another method !
+        if (ValidateFlightCode(flightCode))
         {
             string bookingID = GenerateBookingID(passengerName);
-            bookings[bookingCount++] = new Booking { PassengerName = passengerName, FlightCode = flightCode, BookingID = bookingID }; //add passenger to booking list!
+            bookings[bookingCount++] = new Booking { PassengerName = passengerName, FlightCode = flightCode, BookingID = bookingID };
             p($"Booking confirmed. ID: {bookingID}");
         }
         else
@@ -153,16 +122,89 @@ class Program
         return passengerName + DateTime.Now.Year;
     }
 
+    static void DisplayFlightDetails(string code)
+    {
+        for (int i = 0; i < flightCount; i++)
+        {
+            if (flights[i].FlightCode == code)
+            {
+                var f = flights[i];
+                p($"Flight {f.FlightCode}: {f.FromCity} ➜ {f.ToCity}");
+                p($"Departure: {f.Departure}, Duration: {f.Duration} minutes");
+                return;
+            }
+        }
+        p("Flight not found.");
+    }
+
+    static void SearchBookingsByDestination(string toCity)
+    {
+        bool found = false;
+        for (int i = 0; i < bookingCount; i++)
+        {
+            string flightCode = bookings[i].FlightCode;
+            for (int j = 0; j < flightCount; j++)
+            {
+                if (flights[j].FlightCode == flightCode && flights[j].ToCity == toCity)
+                {
+                    p($"Passenger: {bookings[i].PassengerName} | Flight: {flightCode} ➜ {toCity}");
+                    found = true;
+                }
+            }
+        }
+        if (!found) p("No bookings found for that destination.");
+    }
+
+    static void UpdateFlightDeparture(ref DateTime departure) //REF TO KEEP IT UPDATED 
+    {
+        Console.Write("Enter flight code to update departure: ");
+        string? code = Console.ReadLine();
+        for (int i = 0; i < flightCount; i++)
+        {
+            if (flights[i].FlightCode == code)
+            {
+                Console.Write("Enter new departure time (yyyy-MM-dd HH:mm): ");
+                string? input = Console.ReadLine();
+                if (DateTime.TryParse(input, out DateTime newTime))
+                {
+                    departure = newTime;
+                    flights[i].Departure = newTime;
+                    p($"Departure time updated for flight {code} to {newTime}");
+                }
+                else
+                {
+                    p("Invalid date format.");
+                }
+                return;
+            }
+        }
+        p("Flight not found.");
+    }
+
+    static int CalculateFare(int basePrice, int numTickets)
+    {
+        return basePrice * numTickets;
+    }
+
+    static double CalculateFare(double basePrice, int numTickets)
+    {
+        return basePrice * numTickets;
+    }
+
+    static int CalculateFare(int basePrice, int numTickets, int discount)
+    {
+        int total = basePrice * numTickets;
+        return total - discount;
+    }
+
     static void StartSystem()
     {
         DisplayWelcomeMessage();
         AddFlight("Default001", "Muscat", "Dubai", DateTime.Now.AddHours(2), 60);
-
         while (true)
         {
             int choice = ShowMainMenu();
-            if (choice == -1) continue; // Skip invalid input
-
+            if (choice == -1) continue;
             switch (choice)
             {
                 case 1:
