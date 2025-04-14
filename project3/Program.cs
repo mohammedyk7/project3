@@ -4,8 +4,8 @@ class Program
 {
     static Flight[] flights = new Flight[100];
     static Booking[] bookings = new Booking[100];
-    static int flightCount = 0;
-    static int bookingCount = 0;
+    static int flightCount = 0; //++ or  --
+    static int bookingCount = 0; //++ or  --
 
     static void Main(string[] args)
     {
@@ -32,7 +32,7 @@ class Program
         p("2. Cancel Booking");
         p("3. View All Flights");
         p("4. Exit");
-        Console.Write("Enter your choice: ");
+        p("Enter your choice: ");
         string? input = Console.ReadLine();
         if (int.TryParse(input, out int choice))
         {
@@ -75,6 +75,7 @@ class Program
     }
 
     static bool FindFlightByCode(string code) //return true or falso "bool"
+        //string code consists of numbers and letters 
     {
         for (int i = 0; i < flightCount; i++)
         {
