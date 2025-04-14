@@ -77,9 +77,9 @@ class Program
     static bool FindFlightByCode(string code) //return true or falso "bool"
         //string code consists of numbers and letters 
     {
-        for (int i = 0; i < flightCount; i++)
+        for (int i = 0; i < flightCount; i++)//search starts from 0 to flightcount 0 1 2 = flight count = 3
         {
-            if (flights[i].FlightCode == code) //flights[i].FlightCode == parameter 
+            if (flights[i].FlightCode == code) // comparison check 
                 //The dot operator is used to access the FlightCode property of that particular Flight object at index i.
                 return true;
         }
