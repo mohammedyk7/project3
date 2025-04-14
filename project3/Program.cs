@@ -97,19 +97,21 @@ class Program
         }
         p("Flight not found.");
     }
-    //ref becase date time already has a value the change will be updated by the reference
+    //ref because date time already has a value the change will be updated by the reference
 
-    // The 'out' keyword is used to return a value from a method through a parameter.
-    // It allows the method to modify the value of the parameter and pass it back to the caller.
+
     // In this case, 'out' is used to return the passenger's name after canceling the booking.
     static void CancelFlightBooking(out string passengerName) //out becaue passengername got no value .. the value is defined inside the loop 
     {
+        // Initialize passengerName to an empty string to ensure it has a default value.
         passengerName = string.Empty;
         p("Enter Booking ID: ");
         string? bookingId = Console.ReadLine();
+        // Initialize the index variable to -1, which will be used to track the position of the booking in the array.
         int index = -1;
         for (int i = 0; i < bookingCount; i++)
         {
+            // Check if the booking exists and matches the provided booking ID
             if (bookings[i] != null && bookings[i].BookingID == bookingId)
             {
                 index = i;
@@ -121,11 +123,16 @@ class Program
             p("Booking not found.");
             return;
         }
+        //  assign an empty string if null  
         passengerName = bookings[index].PassengerName ?? string.Empty;
         bookings[index].PassengerName = string.Empty;// TO CLEAR THE ARRAY 
-        bookings[index].FlightCode = string.Empty;//TO CLEAR THE ARRAY 
-        bookings[index].Date = default;
+        bookings[index].FlightCode = string.Empty;//TO CLEAR THE ARRAY
+                                                  
+                                                 
+        bookings[index].Date = default;  // Reset the booking date to its default value
+        // Mark the booking as not confirmed
         bookings[index].IsConfirmed = false;
+        // Clear the booking ID by setting it to null
         bookings[index].BookingID = null;
         p($"Booking canceled. Passenger: {passengerName}");
     }
@@ -167,6 +174,7 @@ class Program
         // Checks if the given flight code exists in the flights array.
         // Returns true if the flight code is found, otherwise false.
         return FindFlightByCode(flightCode);
+        //uses the bool return type because its purpose is to validate whether a given flight code exists in the system.
     }
 
     static string GenerateBookingID(string passengerName)
@@ -218,6 +226,7 @@ class Program
 
     static int CalculateFare(int basePrice, int numTickets)
     {
+        // Calculate the total fare by multiplying the base price with the number of tickets
         return basePrice * numTickets;
     }
 
@@ -228,7 +237,9 @@ class Program
 
     static int CalculateFare(int basePrice, int numTickets, int discount)
     {
+        // Calculate the total fare by multiplying the base price with the number of tickets
         int total = basePrice * numTickets;
+        // Subtract the discount from the total fare and return the result
         return total - discount;
     }
 
