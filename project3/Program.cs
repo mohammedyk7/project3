@@ -26,7 +26,7 @@ class Program
 
     static int ShowMainMenu()
     {
-        p("\nMain Menu:");
+        p("\nAmin Menu:");
         p("1. Book Flight");
         p("2. Cancel Booking");
         p("3. View All Flights");
@@ -103,14 +103,32 @@ class Program
         if (ValidateFlightCode(flightCode))
         {
             string bookingID = GenerateBookingID(passengerName);
-            bookings[bookingCount++] = new Booking { PassengerName = passengerName, FlightCode = flightCode, BookingID = bookingID };
+
+            // Assume a base price for the flight
+            int basePrice = 100; // You can change this value
+            int numTickets = 1;  // Assuming 1 ticket per booking
+
+            // Calculate the fare
+            int totalFare = CalculateFare(basePrice, numTickets);
+
+            // Create the booking
+            bookings[bookingCount++] = new Booking
+            {
+                PassengerName = passengerName,
+                FlightCode = flightCode,
+                BookingID = bookingID
+            };
+
+            // Display the booking confirmation and fare
             p($"Booking confirmed. ID: {bookingID}");
+            p($"Total fare for {passengerName}: {totalFare} units.");
         }
         else
         {
             p("Invalid flight code.");
         }
     }
+
 
     static bool ValidateFlightCode(string flightCode)
     {
@@ -155,7 +173,7 @@ class Program
         if (!found) p("No bookings found for that destination.");
     }
 
-    static void UpdateFlightDeparture(ref DateTime departure) //REF TO KEEP IT UPDATED 
+    static void UpdateFlightDeparture(ref DateTime departure) //REF TO KEEP IT UPDATES 
     {
         Console.Write("Enter flight code to update departure: ");
         string? code = Console.ReadLine();
