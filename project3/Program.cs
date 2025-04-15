@@ -6,11 +6,9 @@ class Program
     static Booking[] bookings = new Booking[100];
     static int flightCount = 0;
     static int bookingCount = 0;
+    static List<Flight> flightsList2 = new List<Flight>();
+    static List<Booking> booking2 = new List<Booking>();
 
-    List<string> flights2 = new string(;
-    static Booking[] bookings = new Booking[100];
-    static int flightCount = 0;
-    static int bookingCount = 0;
 
     static void Main(string[] args)
     {
@@ -60,14 +58,24 @@ class Program
 
     static void AddFlight(string flightCode, string fromCity, string toCity, DateTime departureTime, int duration)
     {
-        flights[flightCount++] = new Flight { FlightCode = flightCode, FromCity = fromCity, ToCity = toCity, Departure = departureTime, Duration = duration };
-    }
-    static void AddFlight2(string flightCode, string fromCity, string toCity, DateTime departureTime, int duration)
-    {
-        flights.Add(new Flight { FlightCode = flightCode, FromCity = fromCity, ToCity = toCity, Departure = departureTime, Duration = duration });
+        flights[flightCount++] = new Flight
+        { FlightCode = flightCode, FromCity = fromCity, ToCity = toCity, Departure = departureTime, Duration = duration };
     }
 
-    static void DisplayAllFlights()//array
+  
+    static void AddFlightToList2(string flightCode, string fromCity, string toCity, DateTime departureTime, int duration)
+    {
+        flightsList2.Add(new Flight
+        {
+            FlightCode = flightCode,
+            FromCity = fromCity,
+            ToCity = toCity,
+            Departure = departureTime,
+            Duration = duration
+        });
+    }
+
+    static void DisplayAllFlights()
     {
         for (int i = 0; i < flightCount; i++)
         {
@@ -75,6 +83,15 @@ class Program
             p($"{flight.FlightCode}: {flight.FromCity} to {flight.ToCity} at {flight.Departure}, Duration: {flight.Duration} mins");
         }
     }
+
+    static void DisplayAllFlights2()//list
+    {
+        foreach (var flight in flightsList2)
+        {
+            p($"{flight.FlightCode}: {flight.FromCity} to {flight.ToCity} at {flight.Departure}, Duration: {flight.Duration} mins");
+        }
+    }
+
 
     static bool FindFlightByCode(string code)
     {
@@ -243,7 +260,7 @@ class Program
         if (!found) p("No bookings found for that destination.");
     }
 
-   
+
 
     static int CalculateFare(int basePrice, int numTickets)
     {
