@@ -82,7 +82,7 @@ class Program
             var flight = flights[i]; //So i don't need to update the type in all places where the variable is used.
             p($"{flight.FlightCode}: {flight.FromCity} to {flight.ToCity} at {flight.Departure}, Duration: {flight.Duration} mins");
         }
-    }
+    }//array
 
     static void DisplayAllFlights2()//list
     {
@@ -93,7 +93,7 @@ class Program
     }
 
 
-    static bool FindFlightByCode(string code)
+    static bool FindFlightByCode(string code)//array
     {
         for (int i = 0; i < flightCount; i++)
         {
@@ -102,6 +102,16 @@ class Program
         }
         return false;
     }
+    static bool FindFlightByCode2(string code) //list 
+    {
+        foreach (var flight in flightsList2)
+        {
+            if (flight.FlightCode == code)//condition
+                return true;
+        }
+        return false;
+    }
+
 
     static void UpdateFlightDeparture(ref DateTime departure)
     {
