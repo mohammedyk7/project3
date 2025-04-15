@@ -284,8 +284,7 @@ class Program
             p($"An error occurred while booking the flight: {ex.Message}");
         }
     }
-
-
+    
     static bool ValidateFlightCode(string flightCode)
     {
         // Checks if the given flight code exists in the flights array.
@@ -310,15 +309,7 @@ class Program
         // This ensures that each booking ID is distinct for the given passenger.
         return passengerName + DateTime.Now.Year;
     }
-    static string GenerateBookingID2(string passengerName)
-    {
-        foreach (var flight in flightList)
-        {
-            passengerName + DateTime.Now.Year;
-            return true;
-        }
-        return false;
-    }
+   
 
     static void DisplayFlightDetails(string code)
     {
