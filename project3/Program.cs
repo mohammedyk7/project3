@@ -7,6 +7,11 @@ class Program
     static int flightCount = 0;
     static int bookingCount = 0;
 
+    List<string> flights2 = new string(;
+    static Booking[] bookings = new Booking[100];
+    static int flightCount = 0;
+    static int bookingCount = 0;
+
     static void Main(string[] args)
     {
         StartSystem();
@@ -57,8 +62,12 @@ class Program
     {
         flights[flightCount++] = new Flight { FlightCode = flightCode, FromCity = fromCity, ToCity = toCity, Departure = departureTime, Duration = duration };
     }
+    static void AddFlight2(string flightCode, string fromCity, string toCity, DateTime departureTime, int duration)
+    {
+        flights.Add(new Flight { FlightCode = flightCode, FromCity = fromCity, ToCity = toCity, Departure = departureTime, Duration = duration });
+    }
 
-    static void DisplayAllFlights()
+    static void DisplayAllFlights()//array
     {
         for (int i = 0; i < flightCount; i++)
         {
