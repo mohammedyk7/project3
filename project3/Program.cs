@@ -7,7 +7,7 @@ class Program
     static int flightCount = 0;
     static int bookingCount = 0;
     static List<Flight> flightsList2 = new List<Flight>();
-    static List<Booking> booking2 = new List<Booking>();
+    static List<Booking> bookings2 = new List<Booking>();
 
 
     static void Main(string[] args)
@@ -37,7 +37,7 @@ class Program
             p("3. View All Flights");
             p("4. Exit");
             p("Enter your choice: ");
-            string? input = Console.ReadLine();
+            string input = Console.ReadLine();
             if (int.TryParse(input, out int choice))
             {
                 return choice;
@@ -144,8 +144,42 @@ class Program
         {
             p($"An error occurred while updating the flight departure: {ex.Message}");
         }
-    }
+    }//array
     //ref because date time already has a value the change will be updated by the reference
+    static void UpdateFlightDeparture2(ref DateTime departure )//list
+    {
+        try
+        {
+            p("Enter flight code to update departure: ");
+            string? code = Console.ReadLine();
+
+            foreach (var flight in flights)
+            {
+                if (flight.FlightCode == code)
+                {
+                    p("Enter new departure time (yyyy-MM-dd HH:mm): ");
+                    string? input = Console.ReadLine();
+                    if (DateTime.TryParse(input, out DateTime newTime))
+                    {
+                        flight.Departure = newTime;
+                        p($"Departure time updated for flight {code} to {newTime}");
+                    }
+                    else
+                    {
+                        p("Invalid date format.");
+                    }
+                    return;
+                }
+            }
+
+            p("Flight not found.");
+        }
+        catch (Exception ex)
+        {
+            p($"An error occurred while updating the flight departure: {ex.Message}");
+        }
+    }
+
 
 
     // In this case, 'out' is used to return the passenger's name after canceling the booking.
@@ -182,7 +216,42 @@ class Program
         {
             p($"An error occurred while canceling the booking: {ex.Message}");
         }
+    }//array
+    static void CancelFlightBooking(List<Booking> bookings, out string passengerName)
+    {
+        passengerName = string.Empty;
+        try
+        {
+            p("Enter Booking ID: ");
+            string? bookingId = Console.ReadLine();
+
+            string? bookingToRemove;
+
+            foreach (var booking in bookings)
+            {
+                if (booking.BookingID == bookingId)
+                {
+                    bookingToRemove = booking;
+                    break;
+                }
+            }
+
+            if (bookingToRemove == null)
+            {
+                p("Booking not found.");
+                return;
+            }
+
+            passengerName = bookingToRemove.PassengerName ?? string.Empty;
+            bookings.Remove(bookingToRemove);
+            p($"Booking canceled. Passenger: {passengerName}");
+        }
+        catch (Exception ex)
+        {
+            p($"An error occurred while canceling the booking: {ex.Message}");
+        }
     }
+
 
     static void BookFlight(string passengerName, string flightCode = "Default001")
     {
@@ -224,12 +293,31 @@ class Program
         return FindFlightByCode(flightCode);
         //uses the bool return type because its purpose is to validate whether a given flight code exists in the system.
     }
+    static bool ValidateFlightCode2(string flightCode, List<Flight> flightList)
+    {
+        foreach (var flight in flightList2)
+        {
+            if (flight.FlightCode == flightCode)
+                return true;
+        }
+        return false;
+    }
+
 
     static string GenerateBookingID(string passengerName)
     {
         // Generates a unique booking ID by appending the current year to the passenger's name.
         // This ensures that each booking ID is distinct for the given passenger.
         return passengerName + DateTime.Now.Year;
+    }
+    static string GenerateBookingID2(string passengerName)
+    {
+        foreach (var flight in flightList)
+        {
+            passengerName + DateTime.Now.Year;
+            return true;
+        }
+        return false;
     }
 
     static void DisplayFlightDetails(string code)
