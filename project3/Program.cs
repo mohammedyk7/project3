@@ -294,7 +294,7 @@ class Program
     }
     static bool ValidateFlightCode2(string flightCode, List<Flight> flightList)
     {
-        foreach (var flight in flightList2)
+        foreach (var flight in flightList) 
         {
             if (flight.FlightCode == flightCode)
                 return true;
