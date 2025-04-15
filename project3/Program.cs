@@ -217,7 +217,7 @@ class Program
             p($"An error occurred while canceling the booking: {ex.Message}");
         }
     }//array
-    static void CancelFlightBooking(List<Booking> bookings, out string passengerName)
+    static void CancelFlightBooking2(List<Booking> bookings, out string passengerName)
     {
         passengerName = string.Empty;
         try
@@ -225,7 +225,7 @@ class Program
             p("Enter Booking ID: ");
             string? bookingId = Console.ReadLine();
 
-            string? bookingToRemove;
+            Booking? bookingToRemove = null; // Corrected type to Booking
 
             foreach (var booking in bookings)
             {
@@ -242,7 +242,7 @@ class Program
                 return;
             }
 
-            passengerName = bookingToRemove.PassengerName ?? string.Empty;
+            passengerName = bookingToRemove.PassengerName ?? string.Empty; // Corrected type usage
             bookings.Remove(bookingToRemove);
             p($"Booking canceled. Passenger: {passengerName}");
         }
@@ -292,7 +292,7 @@ class Program
         return FindFlightByCode(flightCode);
         //uses the bool return type because its purpose is to validate whether a given flight code exists in the system.
     }
-    static bool ValidateFlightCode2(string flightCode, List<Flight> flightList)
+    static bool ValidateFlightCode2(string passengerName, string flightCode = "Default001")
     {
         foreach (var flight in flightList) 
         {
